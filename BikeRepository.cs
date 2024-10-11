@@ -5,7 +5,7 @@ namespace BikeRentalManagement_V2;
 
 public class BikeRepository
 {
-    private string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=BikeRentalManagement;Trusted_Connection=True;";
+    private string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=BikeRentalManagement;Trusted_Connection=True;Encrypt=false;";
 
     public void InsertBikes()
     {
@@ -129,11 +129,12 @@ public class BikeRepository
     }
 
 
-    public void GetAllBikes()
+    public List<Bike> GetAllBikes()
     {
         List<Bike> bikes = new List<Bike>();
         try
         {
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -154,17 +155,13 @@ public class BikeRepository
                     }
                 }
             }
-            foreach (Bike bike in bikes)
-            {
-                Console.WriteLine($"{bikes.ToString()}");
-            }
 
         }
         catch (Exception ex)
         {
             Console.WriteLine($"{ex.Message}");
         }
-
+        return bikes;
     }
 
     public Bike GetBikeById()
@@ -202,6 +199,8 @@ public class BikeRepository
         }
         return null;
     }
+
+
 
 }
 

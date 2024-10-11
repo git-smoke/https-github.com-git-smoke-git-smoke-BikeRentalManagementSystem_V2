@@ -18,8 +18,7 @@ public class Program
             Console.WriteLine("2. View All Bikes");
             Console.WriteLine("3. Update a Bike");
             Console.WriteLine("4. Delete a Bike");
-            Console.WriteLine("5. Get bike by Bike");
-            Console.WriteLine("6. Exit");
+            Console.WriteLine("5. Exit");
             Console.Write("\nChoose an option: ");
 
             string option = Console.ReadLine();
@@ -32,7 +31,11 @@ public class Program
                     break;
                 case "2":
                     Console.Clear();
-                    repository.GetAllBikes();
+                    var data = repository.GetAllBikes();
+                    foreach (var bikes in data)
+                    {
+                        Console.WriteLine($"Id : {bikes.BikeId} Brand : {bikes.Brand} Model : {bikes.Model} RentalPrice : {bikes.RentalPrice}");
+                    }
                     break;
                 case "3":
                     Console.Clear();
@@ -43,10 +46,6 @@ public class Program
                     repository.DeleteBike();
                     break;
                 case "5":
-                    Console.Clear();
-                    Console.WriteLine(repository.GetBikeById());
-                    break;
-                case "6":
                     exit = true;
                     break;
                 default:
