@@ -129,12 +129,11 @@ public class BikeRepository
     }
 
 
-    public List<Bike> GetAllBikes()
+    public void GetAllBikes()
     {
-        List<Bike> bikeList = new List<Bike>();
+        List<Bike> bikes = new List<Bike>();
         try
         {
-            Console.WriteLine("*** Bike List ***");
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -145,33 +144,39 @@ public class BikeRepository
                     {
                         while (reader.Read())
                         {
-                            new Bike(
-                                reader.GetString(0),
-                                reader.GetString(1),
-                                reader.GetString(2),
-                                reader.GetDecimal(3)
-                            );
+                            bikes.Add(new Bike(
+                              reader.GetString(0),
+                              reader.GetString(1),
+                              reader.GetString(2),
+                              reader.GetDecimal(3)
+                            ));
                         }
                     }
                 }
             }
+            foreach (Bike bike in bikes)
+            {
+                Console.WriteLine($"{bikes.ToString()}");
+            }
+
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Error Occured :" + ex.Message);
+            Console.WriteLine($"{ex.Message}");
         }
+
     }
 
     public Bike GetBikeById()
     {
+
         try
         {
-            Console.Write("Enter Your Id: ");
+            Console.Write("Enter Bike Id : ");
             string bikeId = Console.ReadLine();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                connection.Open();
                 string selectQuery = "SELECT * FROM Bikes WHERE BikeId = @bikeId";
                 using (SqlCommand command = new SqlCommand(selectQuery, connection))
                 {
@@ -180,17 +185,24 @@ public class BikeRepository
                     {
                         if (reader.Read())
                         {
-
+                            return new Bike(
+                              reader.GetString(0),
+                              reader.GetString(1),
+                              reader.GetString(2),
+                              reader.GetDecimal(3)
+                            );
                         }
                     }
                 }
             }
         }
-
+        catch (Exception ex)
+        {
+            Console.WriteLine($"{ex.Message}");
         }
-}
-
-
-
+        return null;
+    }
 
 }
+
+
