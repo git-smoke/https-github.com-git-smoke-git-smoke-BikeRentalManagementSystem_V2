@@ -30,7 +30,7 @@ public class Program
                     break;
                 case "2":
                     Console.Clear();
-                    //repository.ReadBikes();
+                    repository.GetAllBikes();
                     break;
                 case "3":
                     Console.Clear();

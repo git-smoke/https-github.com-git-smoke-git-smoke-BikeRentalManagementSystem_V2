@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient.DataClassification;
 
 namespace BikeRentalManagement_V2;
 
@@ -127,9 +128,10 @@ public class BikeRepository
         }
     }
 
-    /*
-    public Bike GetAllBikes()
+
+    public List<Bike> GetAllBikes()
     {
+        List<Bike> bikeList = new List<Bike>();
         try
         {
             Console.WriteLine("*** Bike List ***");
@@ -159,6 +161,36 @@ public class BikeRepository
             Console.WriteLine("Error Occured :" + ex.Message);
         }
     }
-    */
+
+    public Bike GetBikeById()
+    {
+        try
+        {
+            Console.Write("Enter Your Id: ");
+            string bikeId = Console.ReadLine();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string selectQuery = "SELECT * FROM Bikes WHERE BikeId = @bikeId";
+                using (SqlCommand command = new SqlCommand(selectQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@bikeId", bikeId);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+
+                        }
+                    }
+                }
+            }
+        }
+
+        }
+}
+
+
+
 
 }
